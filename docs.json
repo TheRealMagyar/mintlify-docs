@@ -4,9 +4,9 @@
   "name": "Product Guide",
   "description": "Step-by-step guides for every product—platform setup, analytics, and integrations in one place.",
   "colors": {
-    "primary": "#166E3F",
-    "light": "#26BD6C",
-    "dark": "#166E3F"
+    "primary": "#615D69",
+    "light": "#7F83DB",
+    "dark": "#7E5AA1"
   },
   "favicon": "/favicon.ico",
   "icons": {
@@ -41,11 +41,16 @@
     "directory": "card",
     "groups": [
       {
-        "group": "Platform",
-        "icon": "layers",
+        "group": "Game Architecture",
+        "icon": "gamepad",
         "expanded": true,
         "pages": [
           "platform/quickstart",
+          "Cashout System",
+          "Controls",
+          "Game World",
+          "Core Gameplay Mechanics",
+          "Death & Rewards",
           "platform/key-concepts",
           "platform/configuration/settings",
           "platform/configuration/user-management",
@@ -53,45 +58,43 @@
         ]
       },
       {
-        "group": "Analytics",
-        "icon": "chart-bar",
+        "group": "Collections",
+        "icon": "image",
         "expanded": true,
         "pages": [
-          "analytics/quickstart",
-          "analytics/connect-data",
-          "analytics/dashboards/create-dashboard",
-          "analytics/reports/scheduled-reports"
+          "collections/genesis"
         ]
       },
       {
-        "group": "Integrations",
-        "icon": "plug",
+        "group": "Developer Integration",
+        "icon": "cpu",
         "expanded": true,
         "pages": [
-          "integrations/quickstart",
-          "integrations/authentication",
-          "integrations/connectors/crm",
-          "integrations/webhooks/configure"
+          "developer-integration/quickstart",
+          {
+            "group": "API endpoints",
+            "pages": ["developer-integration/health-check", "developer-integration/player-stats", "developer-integration/global-stats"]
+          }
         ]
       }
     ]
   },
   "logo": {
-    "light": "/logo/light.svg",
-    "dark": "/logo/dark.svg"
+    "light": "/logo/logo.PNG",
+    "dark": "/logo/logo.PNG"
   },
   "navbar": {
     "links": [],
     "primary": {
       "type": "button",
-      "label": "Dashboard",
-      "href": "https://dashboard.mintlify.com"
+      "label": "Play Now",
+      "href": "https://serpentic.lol"
     }
   },
   "footer": {
     "socials": {
-      "x": "https://x.com/yourcompany",
-      "linkedin": "https://linkedin.com/company/yourcompany"
+      "x": "https://x.com/serpenticlol",
+      "discord": "https://discord.gg/p4bCqMPRVr"
     }
   }
 }
