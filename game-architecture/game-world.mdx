@@ -1,0 +1,92 @@
+---
+title: Game World
+description: Dynamic circular border, radius scaling, and arena limits in Serpentic.
+---
+
+# Game World
+
+Serpentic uses a **circular dynamic border** that grows and shrinks based on the number of active players.
+
+## Arena Capacity
+
+- **Maximum players per arena**: **40**
+- Once the arena reaches 40 players, new players will be placed in a new arena (instance/shard).
+- This limit ensures good performance and fair gameplay density.
+
+## Border Radius
+
+- **Base Radius**: 2400 units (1 player)
+- **Growth**: +680 units per additional player
+- **Maximum Radius**: 6800 units
+- **Minimum Radius**: 2400 units
+
+**Examples:**
+- 1 player   → 2400 units radius
+- 10 players → 9200 units radius
+- 20 players → 16000 units radius (capped at max)
+- 40 players → 6800 units radius (maximum size)
+
+The playable area is defined by this glowing circular border, centered at (0, 0).
+
+## Dynamic Border Behavior
+
+When a player joins or leaves the arena:
+
+- The border radius **smoothly expands** or **shrinks**.
+- **Expand Speed**: 520 units/sec
+- **Shrink Speed**: 380 units/sec (intentionally slow)
+
+The animation is clearly visible and usually takes **6–12 seconds**, giving players near the border enough time to move to safety.
+
+### Border Collision & Overhang Rules
+
+- **Head collision**: If your **snake head** touches or crosses the border, you die instantly.
+- **Body overhang**: If the border shrinks and part of your body ends up outside:
+  - You **do not lose any segments**.
+  - Your snake can temporarily overhang outside the border.
+  - You can still move and control your snake normally.
+  - Once you move fully back inside, everything continues as normal.
+- Players near the shrinking border get a strong visual warning (flashing red border + sound) and extra time to react.
+
+### When the Border Shrinks
+- Reward Orbs near the border are **gently pushed inward**.
+- Food (grow items) that end up outside the new radius are **immediately deleted**.
+
+## Spawning Rules
+
+### Food (Grow Items)
+- Small glowing pieces that make your snake longer when eaten.
+- **Spawn rate**: Player-dependent
+  - Base: 1 food every 3 seconds
+  - Gets faster with more players (+0.4 sec reduction per additional player)
+- Only spawns **inside the current border radius**
+- Never spawns within 350 units of any player
+- Maximum food on map: 130–160
+
+### Reward Orbs
+- Larger, high-value orbs.
+- Same spawning rules and border restrictions as food.
+
+## Technical Details
+
+- Soft glowing circular border.
+- Hard collision only applies to the snake’s head.
+- Border radius changes are synchronized in real-time.
+- Temporary overhang is fully allowed.
+- Server automatically creates new arenas when player count exceeds 40.
+
+## Summary Table
+
+| Feature                    | Details                                      |
+|---------------------------|----------------------------------------------|
+| Max Players per Arena     | 40                                           |
+| Base Radius               | 2400 units                                   |
+| Growth per Player         | +680 units                                   |
+| Max Radius                | 6800 units                                   |
+| Expand Speed              | 520 units/sec                                |
+| Shrink Speed              | 380 units/sec                                |
+| Food Spawn Rate           | 1 every 3s base, faster with more players    |
+| Max Food                  | 130–160                                      |
+| Spawn Protection          | 350 units from players                       |
+| Head Collision            | Instant death                                |
+| Body Overhang             | Allowed temporarily, no segments lost        |

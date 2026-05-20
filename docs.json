@@ -45,16 +45,12 @@
         "icon": "gamepad",
         "expanded": true,
         "pages": [
-          "platform/quickstart",
-          "Cashout System",
-          "Controls",
-          "Game World",
-          "Core Gameplay Mechanics",
-          "Death & Rewards",
-          "platform/key-concepts",
-          "platform/configuration/settings",
-          "platform/configuration/user-management",
-          "platform/administration/roles-permissions"
+          "game-architecture/quickstart",
+          "game-architecture/cashout-system",
+          "game-architecture/controls",
+          "game-architecture/game-world",
+          "game-architecture/core-gameplay-mechanics",
+          "game-architecture/death-and-rewards"
         ]
       },
       {

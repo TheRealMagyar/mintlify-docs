@@ -1,0 +1,43 @@
+---
+title: Cashout System
+description: Learn how to securely withdraw your earnings in Serpentic using the E key with 4-second confirmation and session-based protection.
+---
+
+![Cashout Process](/images/cashout.PNG)
+*Cashout flow — Press and hold E for 4 seconds to withdraw your balance*
+
+The Cashout System allows players to withdraw their in-game earnings (initial deposit + rewards from orbs) back to their wallet at any time.
+
+## How Cashout Works
+
+1. **Press & Hold E** — While in the arena, press and hold the **E** key for **4 seconds**.
+2. **No Control During Hold** — Your snake becomes uncontrollable while holding E (this prevents accidental or exploitative cashouts).
+3. **Validation** — The system checks:
+   - You are not in an active game session
+   - Death cooldown has passed (if you died recently)
+4. **Withdrawal** — Your entire `PlayerBalance` is transferred back to your connected wallet.
+
+## Safety Mechanisms
+
+- **Session Lock**: You cannot cash out while inside an active arena session.
+- **Death Cooldown**: After dying, you must wait 60 seconds before cashing out.
+- **Two-Step Exit**: 
+  - First `exit_session()` (called after successful E hold)
+  - Then `cash_out()` transaction
+- All gas fees are paid by the player.
+
+## Technical Details
+
+- Powered by the `PlayerBalance` smart contract on Sui.
+- Uses owned objects — your balance is always under your control.
+- All transactions (exit + cashout) are initiated by the player.
+- Backend only validates and triggers; never pays gas.
+
+## When Can You Cash Out?
+
+| Situation                    | Can Cash Out? | Reason |
+|-----------------------------|---------------|--------|
+| Alive + in arena            | No            | Active session |
+| Died recently               | No            | 60s cooldown |
+| Successfully exited arena   | Yes           | Ready |
+| No active session           | Yes           | Immediate |
