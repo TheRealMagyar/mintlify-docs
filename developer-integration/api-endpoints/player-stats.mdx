@@ -1,0 +1,61 @@
+---
+title: Player Stats
+description: Fetch detailed statistics for any player by wallet address.
+icon: user
+---
+
+## Endpoints
+
+```http
+GET /player/{walletAddress}
+GET /player/{walletAddress}/history?limit=50
+```
+
+## Example
+
+```typescript
+const wallet = "0x742d35Cc6634C0532925a3b844Bc454e4438f44e";
+const res = await fetch(`https://api.serpentic.lol/player/${wallet}`);
+const { data } = await res.json();
+
+console.log(data.username, data.win_rate);
+```
+
+## Response Structure
+
+```json
+{
+  "success": true,
+  "data": {
+    "wallet": "0x742d35Cc6634C0532925a3b844Bc454e4438f44e",
+    "username": "SnekMaster",
+    "total_balance": 45820.75,
+    "total_kills": 1247,
+    "total_deaths": 689,
+    "best_length": 2456,
+    "arenas_joined": 312,
+    "win_rate": 0.672,
+    "favorite_entry_fee": 10,
+    "last_played": "2026-05-19T21:34:12Z"
+  }
+}
+```
+
+## Response Fields
+
+| Field | Type | Description |
+|---|---|---|
+| `wallet` | `string` | Player's wallet address |
+| `username` | `string` | In-game display name |
+| `total_balance` | `number` | Lifetime balance accumulated |
+| `total_kills` | `number` | Total eliminations |
+| `total_deaths` | `number` | Total deaths |
+| `best_length` | `number` | Longest snake length ever achieved |
+| `arenas_joined` | `number` | Total arenas entered |
+| `win_rate` | `number` | Win ratio (0–1) |
+| `favorite_entry_fee` | `number` | Most frequently used entry fee |
+| `last_played` | `string` | ISO 8601 timestamp of last session |
+
+<Tip>
+Fetch match history with `/player/{wallet}/history?limit=50`. The `limit` parameter accepts values up to 200.
+</Tip>

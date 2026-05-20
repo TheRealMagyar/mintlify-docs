@@ -1,0 +1,39 @@
+---
+title: Health Check
+description: Check if the Serpentic API is online and get real-time server information.
+icon: activity
+---
+
+## Endpoint
+
+```http
+GET /health
+```
+
+## Example Response
+
+```json
+{
+  "success": true,
+  "status": "healthy",
+  "version": "v1.3.0",
+  "uptime": "18d 7h 42m",
+  "players_online": 1432,
+  "active_arenas": 41,
+  "timestamp": "2026-05-20T13:45:12Z"
+}
+```
+
+## Response Fields
+
+| Field | Type | Description |
+|---|---|---|
+| `status` | `string` | `healthy` \| `degraded` \| `maintenance` |
+| `version` | `string` | Current API version |
+| `uptime` | `string` | Server uptime since last restart |
+| `players_online` | `number` | Players currently active in arenas |
+| `active_arenas` | `number` | Number of running game instances |
+
+<Tip>
+Use this endpoint to power status pages or health monitoring for your tools and bots.
+</Tip>

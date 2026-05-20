@@ -1,0 +1,92 @@
+---
+title: Global Stats
+description: Network-wide statistics, leaderboards, and real-time data.
+icon: trending-up
+---
+
+## Endpoints
+
+```http
+GET /global/stats
+GET /leaderboard?limit=100&min_balance=1000
+```
+
+## Global Statistics
+
+### Example Response
+
+```json
+{
+  "success": true,
+  "data": {
+    "total_players": 18740,
+    "players_online": 1567,
+    "active_arenas": 47,
+    "total_orbs_collected": 1248930,
+    "total_sui_cashed_out": 3247.85,
+    "peak_players_today": 2894,
+    "average_session_length": 542
+  }
+}
+```
+
+### Response Fields
+
+| Field | Type | Description |
+|---|---|---|
+| `total_players` | `number` | All-time registered players |
+| `players_online` | `number` | Currently active players |
+| `active_arenas` | `number` | Running game instances |
+| `total_orbs_collected` | `number` | Orbs collected across all time |
+| `total_sui_cashed_out` | `number` | Total SUI paid out to players |
+| `peak_players_today` | `number` | Highest concurrent players today |
+| `average_session_length` | `number` | Average session length in seconds |
+
+---
+
+## Leaderboard
+
+### Query Parameters
+
+| Parameter | Type | Description |
+|---|---|---|
+| `limit` | `number` | Number of results to return (max 100) |
+| `min_balance` | `number` | Filter players below this balance |
+
+### Example Response
+
+```json
+{
+  "success": true,
+  "data": [
+    {
+      "rank": 1,
+      "wallet": "0x...",
+      "username": "VenomSnek",
+      "balance": 124890.5,
+      "kills": 3421
+    }
+  ]
+}
+```
+
+<Info>
+The leaderboard can be filtered by `min_balance`, `min_kills`, or a time period query parameter.
+</Info>
+
+## Use Cases
+
+<CardGroup cols={2}>
+  <Card title="Live Player Count" icon="users">
+    Embed a live widget on your site showing current player activity.
+  </Card>
+  <Card title="Community Leaderboards" icon="trophy">
+    Build ranked tables for your Discord or web community.
+  </Card>
+  <Card title="Analytics Dashboards" icon="bar-chart">
+    Track network growth, cashouts, and engagement over time.
+  </Card>
+  <Card title="Bot Notifications" icon="bell">
+    Trigger alerts when top players cash out big amounts.
+  </Card>
+</CardGroup>

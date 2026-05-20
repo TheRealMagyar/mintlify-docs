@@ -69,7 +69,7 @@
           "developer-integration/quickstart",
           {
             "group": "API endpoints",
-            "pages": ["developer-integration/health-check", "developer-integration/player-stats", "developer-integration/global-stats"]
+            "pages": ["developer-integration/api-endpoints/health-check", "developer-integration/api-endpoints/player-stats", "developer-integration/api-endpoints/global-stats"]
           }
         ]
       }

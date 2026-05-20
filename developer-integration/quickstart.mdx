@@ -1,45 +1,56 @@
 ---
-title: Quickstart
-sidebarTitle: Quickstart
-description: Connect your first integration in under 10 minutes.
+title: Quick Start
+description: Integrate Serpentic into your project using our public API.
 ---
 
-This guide walks through connecting a pre-built integration from the connector catalog. The steps are the same for most connector types—only the authentication method varies.
+## Overview
 
-## Before you begin
+The Serpentic API allows developers to build dashboards, bots, leaderboards, analytics tools, and more on top of the game.
 
-- Admin or Member role in your workspace
-- Credentials for the tool you want to connect (API key, OAuth app client ID and secret, or service account)
+**Base URL:** `https://api.serpentic.lol`
 
-## Steps
+All endpoints are **public** (no authentication required yet) with rate limiting applied at 60 requests per minute per IP.
 
-<Steps>
-  <Step title="Find your integration">
-    Go to **Integrations → Catalog** and search for or browse to the tool you want to connect. Each connector card shows the authentication method and sync capabilities.
-  </Step>
-  <Step title="Authenticate">
-    Click **Connect** on the connector. Depending on the authentication method:
+## Quick Example
 
-    - **API key** — Paste the key into the provided field.
-    - **OAuth 2.0** — Click **Authorize** to be redirected to the tool's authorization page. Sign in and grant access, then you'll be returned automatically.
-    - **Service account** — Upload the credentials file (usually a JSON key file) and enter any required fields.
+```typescript
+const response = await fetch('https://api.serpentic.lol/health');
+const data = await response.json();
 
-    See [Authentication methods](/integrations/authentication) for details on each approach.
-  </Step>
-  <Step title="Configure field mapping">
-    Map fields from the connected tool to your workspace's data model. Default mappings are pre-filled for common fields—review them and adjust as needed. Required fields are marked with an asterisk.
-  </Step>
-  <Step title="Test the connection">
-    Click **Test connection** to trigger a sample sync. The test pulls a small number of records and displays them for review. If the test fails, an error message explains the cause.
-  </Step>
-</Steps>
+console.log(data);
+```
 
-<Note>
-  Some connectors require the platform's outbound IP addresses to be allowlisted on your end. Check the connector's setup notes for IP requirements before testing.
-</Note>
+<Info>
+All responses follow a consistent structure:
 
-## Next steps
+```json
+{
+  "success": true,
+  "data": { },
+  "timestamp": "2026-05-20T13:45:12Z"
+}
+```
+</Info>
 
-- Review [authentication methods](/integrations/authentication) to understand when to rotate credentials.
-- Explore [connectors](/integrations/connectors) for category-specific setup details.
-- Set up [webhooks](/integrations/webhooks/configure) if you need event-driven automation.
+## Available Endpoints
+
+| Endpoint | Method | Description |
+|---|---|---|
+| `/health` | `GET` | API health and server status |
+| `/player/{wallet}` | `GET` | Player statistics and history |
+| `/global/stats` | `GET` | Network-wide statistics |
+| `/leaderboard` | `GET` | Global leaderboard |
+
+## Next Steps
+
+<CardGroup cols={3}>
+  <Card title="Health Check" icon="activity" href="./health-check">
+    Verify the API is online and get real-time server info.
+  </Card>
+  <Card title="Player Stats" icon="user" href="./player-stats">
+    Fetch detailed stats for any player by wallet address.
+  </Card>
+  <Card title="Global Stats" icon="trending-up" href="./global-stats">
+    Explore network-wide data and leaderboards.
+  </Card>
+</CardGroup>
