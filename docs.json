@@ -54,6 +54,39 @@
         ]
       },
       {
+        "group": "Infrastructure & Solutions",
+        "icon": "scroll",
+        "expanded": true,
+        "pages": [
+          "infrastructure-and-solutions/quickstart",
+          {
+            "group": "Game server",
+            "pages": [
+              {
+                "group": "Communication",
+                "pages": ["infrastructure-and-solutions/game-server/communication/api", "infrastructure-and-solutions/game-server/communication/web-socket"]
+              },
+              {
+                "group": "Rendering",
+                "pages": ["infrastructure-and-solutions/game-server/rendering/admin-commands", "infrastructure-and-solutions/game-server/rendering/anticheat", "infrastructure-and-solutions/game-server/rendering/arenas", "infrastructure-and-solutions/game-server/rendering/input-processing", "infrastructure-and-solutions/game-server/rendering/snapshots"]
+              }
+            ]
+          },
+          {
+            "group": "Payment system",
+            "pages": ["infrastructure-and-solutions/payment-system/smartcontracts", "infrastructure-and-solutions/payment-system/validation"]
+          },
+          {
+            "group": "Database",
+            "pages": ["infrastructure-and-solutions/database/tables-and-relationships"]
+          },
+          {
+            "group": "UI",
+            "pages": ["infrastructure-and-solutions/UI/interface", "infrastructure-and-solutions/UI/skins", "infrastructure-and-solutions/UI/status", "infrastructure-and-solutions/UI/minimap"]
+          }
+        ]
+      },
+      {
         "group": "Collections",
         "icon": "image",
         "expanded": true,

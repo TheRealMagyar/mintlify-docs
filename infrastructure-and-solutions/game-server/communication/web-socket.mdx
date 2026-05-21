@@ -1,0 +1,6 @@
+A websocket a kliens és a server közötti folyamatos kapcsolatot biztosít, amely lehetővé teszi a valós idejű kommunikációt.
+
+A game server a kliensnek az aréna állapotát websocketen keresztül fogja elküldeni, snapshotként.
+Ez azt jelenti, hogy a kliens minden egyes frissítéskor megkapja az aktuális állapotot, így mindig naprakész információval rendelkezik az arénáról.
+Ezeknek a snapshotoknak a formátuma JSON lesz, amely könnyen feldolgozható a kliens oldalon.
+
