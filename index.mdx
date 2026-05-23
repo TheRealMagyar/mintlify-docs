@@ -1,134 +1,148 @@
 ---
-title: Home
-description: Everything you need to set up, configure, and get the most out of Platform, Analytics, and Integrations tools.
-mode: frame
+title: "Serpentic Docs"
+description: "Everything you need to play, build on, and understand Serpentic — the skill-based multiplayer snake arena game on SUI."
+icon: "house"
 ---
 
-<div data-product-guide-index className="flex w-full flex-col gap-8 max-w-5xl mx-auto px-4 md:px-8 lg:px-12 py-10 lg:gap-14 lg:py-16">
-  <div className="flex max-w-[540px] flex-col gap-2 self-center text-center">
-    <h1 className="text-[30px] font-medium leading-9 tracking-tight text-gray-900 dark:text-gray-50">
-      Product Guide
-    </h1>
-    <p className="text-balance text-base leading-relaxed tracking-tight text-gray-600 dark:text-gray-400">
-      Everything you need to set up, configure, and get the most out of Platform, Analytics, and Integrations tools.
-    </p>
-  </div>
+## Welcome
 
-  <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-    <Card
-      title={<span className="product-guide-feature-card-title">Platform overview</span>}
-      icon="chart-no-axes-gantt"
-      href="/platform"
-      className="product-guide-feature-card"
-      size={64}
-    >
-      <span className="product-guide-feature-card-description">Setup, configure, and manage your workspace.</span>
-    </Card>
+Serpentic is a real-time multiplayer snake arena game built on the SUI blockchain. Grow your snake, hunt Reward Orbs, and cash out your earnings before you die. Every session is a live economic game — your balance is real, your risk is real, and your cashout lands on-chain.
 
-    <a
-      href="/analytics"
-      className="rounded-2xl flex flex-col gap-4 border bg-gray-50 p-4 outline-none shadow-sm shadow-gray-950/5 transition hover:border-primary hover:shadow-md dark:bg-gray-950 dark:shadow-black/20 dark:hover:border-primary"
-    >
-      <Icon icon="chart-column" color="rgb(var(--primary))" size={18} className="shrink-0" />
-      <div className="flex flex-col gap-1">
-        <span className="font-serif text-base font-medium text-gray-900 dark:text-gray-50">Analytics</span>
-        <span className="text-sm leading-relaxed text-gray-600 dark:text-gray-400">
-          Build, report, and visualize your data.
-        </span>
-      </div>
-    </a>
-    <a
-      href="/integrations"
-      className="rounded-2xl flex flex-col gap-4 border bg-gray-50 p-4 outline-none shadow-sm shadow-gray-950/5 transition hover:border-primary hover:shadow-md dark:bg-gray-950 dark:shadow-black/20 dark:hover:border-primary"
-    >
-      <Icon icon="code-xml" color="rgb(var(--primary))" size={18} className="shrink-0" />
-      <div className="flex flex-col gap-1">
-        <span className="font-serif text-base font-medium text-gray-900 dark:text-gray-50">Integrations</span>
-        <span className="text-sm leading-relaxed text-gray-600 dark:text-gray-400">
-          Ready-to-use connectors for common platforms and flexible webhooks.
-        </span>
-      </div>
-    </a>
-  </div>
+This documentation covers everything: how to play, how the game systems work under the hood, how to integrate with the public API, and how the backend infrastructure is structured.
 
-  <hr className="border-0 border-t border-border" />
+---
 
-  <div className="flex flex-col gap-4">
-    <h2 className="font-serif text-xl font-medium leading-normal text-gray-900 dark:text-gray-50">Common tasks</h2>
+## Start here
 
-    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-      <a
-        href="/platform/configuration/user-management"
-        className="rounded-2xl flex flex-col gap-4 border bg-gray-50 p-4 outline-none shadow-sm shadow-gray-950/5 transition hover:border-primary hover:shadow-md dark:bg-gray-950 dark:shadow-black/20 dark:hover:border-primary"
-      >
-        <Icon icon="users" color="rgb(var(--primary))" size={18} className="shrink-0" />
-        <div className="flex flex-col gap-1">
-          <span className="font-serif text-base font-medium text-gray-900 dark:text-gray-50">Manage your team</span>
-          <span className="text-sm leading-relaxed text-gray-600 dark:text-gray-400">
-            Add members, assign roles, and control access across your workspace.
-          </span>
-        </div>
-      </a>
-      <a
-        href="/analytics/connect-data"
-        className="rounded-2xl flex flex-col gap-4 border bg-gray-50 p-4 outline-none shadow-sm shadow-gray-950/5 transition hover:border-primary hover:shadow-md dark:bg-gray-950 dark:shadow-black/20 dark:hover:border-primary"
-      >
-        <Icon icon="database" color="rgb(var(--primary))" size={18} className="shrink-0" />
-        <div className="flex flex-col gap-1">
-          <span className="font-serif text-base font-medium text-gray-900 dark:text-gray-50">Connect a data source</span>
-          <span className="text-sm leading-relaxed text-gray-600 dark:text-gray-400">
-            Link a database, data warehouse, or third-party data provider.
-          </span>
-        </div>
-      </a>
-      <a
-        href="/integrations/connectors/crm"
-        className="rounded-2xl flex flex-col gap-4 border bg-gray-50 p-4 outline-none shadow-sm shadow-gray-950/5 transition hover:border-primary hover:shadow-md dark:bg-gray-950 dark:shadow-black/20 dark:hover:border-primary"
-      >
-        <Icon icon="building-2" color="rgb(var(--primary))" size={18} className="shrink-0" />
-        <div className="flex flex-col gap-1">
-          <span className="font-serif text-base font-medium text-gray-900 dark:text-gray-50">Connect your CRM</span>
-          <span className="text-sm leading-relaxed text-gray-600 dark:text-gray-400">
-            Sync your CRM through native connectors or a custom strategy.
-          </span>
-        </div>
-      </a>
-      <a
-        href="/analytics/dashboards/create-dashboard"
-        className="rounded-2xl flex flex-col gap-4 border bg-gray-50 p-4 outline-none shadow-sm shadow-gray-950/5 transition hover:border-primary hover:shadow-md dark:bg-gray-950 dark:shadow-black/20 dark:hover:border-primary"
-      >
-        <Icon icon="layout-dashboard" color="rgb(var(--primary))" size={18} className="shrink-0" />
-        <div className="flex flex-col gap-1">
-          <span className="font-serif text-base font-medium text-gray-900 dark:text-gray-50">Build a dashboard</span>
-          <span className="text-sm leading-relaxed text-gray-600 dark:text-gray-400">
-            Add charts, set filters, and share a live dashboard.
-          </span>
-        </div>
-      </a>
-      <a
-        href="/integrations/webhooks/configure"
-        className="rounded-2xl flex flex-col gap-4 border bg-gray-50 p-4 outline-none shadow-sm shadow-gray-950/5 transition hover:border-primary hover:shadow-md dark:bg-gray-950 dark:shadow-black/20 dark:hover:border-primary"
-      >
-        <Icon icon="webhook" color="rgb(var(--primary))" size={18} className="shrink-0" />
-        <div className="flex flex-col gap-1">
-          <span className="font-serif text-base font-medium text-gray-900 dark:text-gray-50">Set up a webhook</span>
-          <span className="text-sm leading-relaxed text-gray-600 dark:text-gray-400">
-            Subscribe to events and route them to any endpoint.
-          </span>
-        </div>
-      </a>
-      <a
-        href="/analytics/reports/scheduled-reports"
-        className="rounded-2xl flex flex-col gap-4 border bg-gray-50 p-4 outline-none shadow-sm shadow-gray-950/5 transition hover:border-primary hover:shadow-md dark:bg-gray-950 dark:shadow-black/20 dark:hover:border-primary"
-      >
-        <Icon icon="calendar-clock" color="rgb(var(--primary))" size={18} className="shrink-0" />
-        <div className="flex flex-col gap-1">
-          <span className="font-serif text-base font-medium text-gray-900 dark:text-gray-50">Schedule a report</span>
-          <span className="text-sm leading-relaxed text-gray-600 dark:text-gray-400">
-            Send recurring snapshots via email or Slack.
-          </span>
-        </div>
-      </a>
-    </div>
-  </div>
-</div>
+<CardGroup cols={2}>
+  <Card title="How to Play" icon="gamepad-2" href="/game-architecture/quickstart">
+    Controls, core mechanics, and your first session — up and running in under 60 seconds.
+  </Card>
+  <Card title="Infrastructure Overview" icon="server" href="/infrastructure-and-solutions/quickstart">
+    A high-level map of every backend system and how they connect.
+  </Card>
+  <Card title="Developer API" icon="code" href="/developer-integration/quickstart">
+    Build dashboards, bots, and leaderboards on top of the public API.
+  </Card>
+  <Card title="Genesis NFTs" icon="gem" href="/collections/genesis">
+    The 555-piece limited edition collection and the benefits that come with it.
+  </Card>
+</CardGroup>
+
+---
+
+## Game architecture
+
+How the game works from the player's perspective — mechanics, economy, and rules.
+
+<CardGroup cols={2}>
+  <Card title="Core Gameplay Mechanics" icon="swords" href="/game-architecture/core-gameplay-mechanics">
+    The full game loop — growing, fighting, surviving, and cashing out.
+  </Card>
+  <Card title="Game World" icon="circle-dashed" href="/game-architecture/game-world">
+    The dynamic circular border, radius scaling, food and orb spawning.
+  </Card>
+  <Card title="Controls" icon="arrow-right-left" href="/game-architecture/controls">
+    Movement, boost, and cashout keybinds.
+  </Card>
+  <Card title="Death & Rewards" icon="skull" href="/game-architecture/death-and-rewards">
+    What happens when you die, orb drops, and the session economy.
+  </Card>
+  <Card title="Cashout System" icon="wallet" href="/game-architecture/cashout-system">
+    How to safely withdraw earnings to your wallet.
+  </Card>
+</CardGroup>
+
+---
+
+## Infrastructure & solutions
+
+The backend systems that power Serpentic — for developers and the core team.
+
+### Game Server
+
+<CardGroup cols={2}>
+  <Card title="Arenas" icon="layout-grid" href="/infrastructure-and-solutions/game-server/rendering/arenas">
+    Instance lifecycle, matchmaking, region routing, and sharding.
+  </Card>
+  <Card title="Input Processing" icon="arrow-right-left" href="/infrastructure-and-solutions/game-server/rendering/input-processing">
+    How player inputs are validated, queued, and applied each tick.
+  </Card>
+  <Card title="Snapshots" icon="camera" href="/infrastructure-and-solutions/game-server/rendering/snapshots">
+    How arena state is serialized and broadcast to clients over WebSocket.
+  </Card>
+  <Card title="Admin Commands" icon="crown" href="/infrastructure-and-solutions/game-server/rendering/admin-commands">
+    Privileged player and arena operations via the Private API.
+  </Card>
+  <Card title="Anticheat" icon="shield" href="/infrastructure-and-solutions/game-server/rendering/anticheat">
+    How cheating is detected and handled server-side.
+  </Card>
+  <Card title="WebSocket" icon="plug" href="/infrastructure-and-solutions/game-server/communication/web-socket">
+    The real-time connection layer between client and game server.
+  </Card>
+  <Card title="API" icon="terminal" href="/infrastructure-and-solutions/game-server/communication/api">
+    The Private API — internal communication between game server, payment system, and client.
+  </Card>
+</CardGroup>
+
+### Payment System
+
+<CardGroup cols={2}>
+  <Card title="Smart Contracts" icon="file-code" href="/infrastructure-and-solutions/payment-system/smartcontracts">
+    How player balances are held and transferred on-chain via SUI.
+  </Card>
+  <Card title="Validation" icon="circle-check" href="/infrastructure-and-solutions/payment-system/validation">
+    How payment state is validated before cashout is permitted.
+  </Card>
+</CardGroup>
+
+### Database
+
+<CardGroup cols={1}>
+  <Card title="Tables & Relationships" icon="database" href="/infrastructure-and-solutions/database/tables-and-relationships">
+    The full PostgreSQL schema — players, arenas, payments, and admin logs.
+  </Card>
+</CardGroup>
+
+### UI
+
+<CardGroup cols={2}>
+  <Card title="Interface" icon="layout-dashboard" href="/infrastructure-and-solutions/UI/interface">
+    The main screen — every panel, button, and overlay before entering a session.
+  </Card>
+  <Card title="Minimap" icon="map" href="/infrastructure-and-solutions/UI/minimap">
+    The in-arena minimap — coordinate mapping, update rate, and border warnings.
+  </Card>
+  <Card title="Skins" icon="palette" href="/infrastructure-and-solutions/UI/skins">
+    Skin ownership, equipping, rendering, and Genesis NFT exclusives.
+  </Card>
+  <Card title="Status" icon="activity" href="/infrastructure-and-solutions/UI/status">
+    The persistent ping and FPS overlay.
+  </Card>
+</CardGroup>
+
+---
+
+## Developer integration
+
+<CardGroup cols={2}>
+  <Card title="Health Check" icon="heart-pulse" href="/developer-integration/api-endpoints/health-check">
+    Verify the API is online and get real-time server info.
+  </Card>
+  <Card title="Player Stats" icon="chart-bar" href="/developer-integration/api-endpoints/player-stats">
+    Fetch detailed stats and match history for any player by wallet address.
+  </Card>
+  <Card title="Global Stats" icon="globe" href="/developer-integration/api-endpoints/global-stats">
+    Network-wide statistics, leaderboards, and real-time player counts.
+  </Card>
+</CardGroup>
+
+---
+
+## Collections
+
+<CardGroup cols={1}>
+  <Card title="Genesis NFTs" icon="gem" href="/collections/genesis">
+    555 limited edition passes — exclusive event access, early features, and Genesis skin unlocks.
+  </Card>
+</CardGroup>

@@ -29,12 +29,12 @@
         {
           "anchor": "Changelog",
           "icon": "scroll-text",
-          "href": "https://www.mintlify.com/docs/changelog"
+          "href": "https://docs.serpentic.lol/changelog"
         },
         {
           "anchor": "Help",
           "icon": "life-buoy",
-          "href": "https://www.mintlify.com/docs/contact-support"
+          "href": "https://docs.serpentic.lol/contact-support"
         }
       ]
     },

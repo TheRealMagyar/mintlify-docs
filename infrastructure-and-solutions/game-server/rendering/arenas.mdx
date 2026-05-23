@@ -1,2 +1,188 @@
-- EU
-- US
+---
+title: "Arenas"
+description: "How arena instances are created, managed, and destroyed — covering region routing, lifecycle, sharding, and the matchmaking flow inside the Game Server."
+icon: "circle-dashed"
+---
+
+## Overview
+
+Arenas are the core session management units of Serpentic. Each arena runs as an isolated game server instance with its own border state, player pool, and spawn logic. Arenas are fully independent from one another — no data flows between them in real time.
+
+```mermaid
+flowchart LR
+    C[Client]
+    API[Private API\nNode.js]
+    GS[Game Server]
+    DB[(PostgreSQL)]
+
+    C -->|"WebSocket connection"| GS
+    C -->|"REST /join"| API
+    API -->|"Arena assignment"| GS
+    GS -->|"Snapshot broadcast"| C
+    GS -->|"Session state write"| DB
+```
+
+<Note>
+  Every arena is hosted regionally — in either the EU or US region. The client selects a region from the main menu before joining. Matchmaking only operates within the selected region.
+</Note>
+
+---
+
+## Regions
+
+| Region | Identifier | Location |
+|---|---|---|
+| Europe | `eu` | EU server |
+| North America | `us` | US server |
+
+The region is stored in the `location` field of the `arenas` table. It can be modified at runtime via admin command, but this only updates the DB label — it does not migrate the server.
+
+---
+
+## Arena lifecycle
+
+Every arena instance goes through the following lifecycle:
+
+```mermaid
+stateDiagram-v2
+    [*] --> Waiting : Instance created
+    Waiting --> Active : First player joins
+    Active --> WindingDown : Player count drops
+    WindingDown --> Active : New player joins
+    WindingDown --> Ended : All players left / died
+    Active --> Ended : Force stop (admin)
+    Ended --> [*] : Instance cleanup
+```
+
+| Phase | Description |
+|---|---|
+| `Waiting` | Instance initialized. Border base size: 2400 units. Waiting for the first player. |
+| `Active` | At least 1 player is active. Border scales dynamically with player count. |
+| `WindingDown` | Player count is dropping. Border shrinks slowly (380 units/sec). |
+| `Ended` | All players have died or exited. Instance shuts down, PostgreSQL cleanup runs. |
+
+<Warning>
+  If an arena is stopped via admin command (`POST /private/admin/arena/:id/stop`), it moves directly to `Ended` — all players are kicked without a death penalty after a 10-second grace period.
+</Warning>
+
+---
+
+## Matchmaking and join flow
+
+When a player wants to join an arena:
+
+```mermaid
+sequenceDiagram
+    actor P as Player
+    participant API as Private API
+    participant DB as PostgreSQL
+    participant GS as Game Server
+
+    P->>API: POST /join { region, wallet }
+    API->>DB: SELECT arena WHERE region = ? AND player_count < 40 ORDER BY player_count DESC LIMIT 1
+    alt Arena available
+        DB-->>API: arena_id
+    else No arena available
+        API->>GS: Create new arena instance
+        GS-->>API: new arena_id
+        API->>DB: INSERT INTO arenas (arena_id, location, capacity, ...)
+    end
+    API->>DB: UPDATE players SET active_session = arena_id
+    API->>GS: emit PLAYER_JOINING { wallet, arena_id }
+    GS->>GS: Spawn player (min. 350 units from all other snakes)
+    GS-->>P: WebSocket SNAPSHOT stream starts
+    API-->>P: ✅ { arena_id, region, spawn_position }
+```
+
+**Matchmaking rules:**
+- The player is placed into the fullest arena that is not yet at capacity (dense session priority)
+- Manual arena selection is not possible
+- Spawn position: minimum 350 units from every other snake
+- Entry fee must be paid before joining — the session only starts after a successful transaction
+
+---
+
+## Sharding
+
+Serpentic handles any number of concurrent players through automatic sharding:
+
+```mermaid
+flowchart TD
+    P[New player joins]
+    CHECK{Arena\navailable?}
+    JOIN[Place in the\nfullest arena]
+    NEW[Create new\nshard]
+    P --> CHECK
+    CHECK -- yes --> JOIN
+    CHECK -- no --> NEW
+    NEW --> JOIN
+```
+
+- Max **40 players** per arena instance
+- When all active arenas are full, the game server immediately opens a new shard
+- No cross-shard communication — border, orbs, and food are fully isolated per arena
+- No global player cap — scales horizontally
+- Players cannot switch arenas mid-session
+
+---
+
+## Arena state on the Game Server
+
+The game server keeps the following state in memory for every active arena:
+
+```typescript
+interface ArenaState {
+  arena_id: string;               // e.g. "arena_eu_03"
+  region: "eu" | "us";
+  player_count: number;           // 0–40
+  border_radius: number;          // current radius in units
+  border_target_radius: number;
+  status: "waiting" | "active" | "winding_down" | "ended";
+  players: Map<string, PlayerState>;
+  food: FoodItem[];
+  reward_orbs: RewardOrb[];
+  created_at: number;             // Unix timestamp
+}
+```
+
+This state is updated every tick and sent to clients as a snapshot over WebSocket. Only session-critical fields are written to PostgreSQL (`active_session`, `is_alive`, `balance`) — the full arena state lives exclusively in memory.
+
+<Note>
+  If the game server crashes, the in-memory arena state is lost. PostgreSQL can recover who was in an active session, but positions, snake lengths, and orb locations cannot be restored. Crashed sessions are therefore automatically closed without a death penalty — entry fees are refunded to affected players.
+</Note>
+
+---
+
+## ARENAS table
+
+```sql
+CREATE TABLE arenas (
+  arena_id    VARCHAR PRIMARY KEY,   -- e.g. "arena_eu_03"
+  arena_name  VARCHAR,
+  location    VARCHAR,               -- "eu" | "us"
+  capacity    INTEGER DEFAULT 40,
+  status      VARCHAR DEFAULT 'waiting',
+  created_at  TIMESTAMPTZ DEFAULT NOW(),
+  updated_at  TIMESTAMPTZ DEFAULT NOW()
+);
+```
+
+| Field | Type | Description |
+|---|---|---|
+| `arena_id` | `VARCHAR` | Unique instance identifier |
+| `arena_name` | `VARCHAR` | Human-readable name (e.g. `EU Arena 3`) |
+| `location` | `VARCHAR` | Region — `eu` or `us` |
+| `capacity` | `INTEGER` | Max player count (default: 40) |
+| `status` | `VARCHAR` | Current lifecycle phase |
+| `created_at` | `TIMESTAMPTZ` | Timestamp when the instance was created |
+| `updated_at` | `TIMESTAMPTZ` | Timestamp of the last update |
+
+---
+
+## Related pages
+
+- **Snapshots** — How arena state is serialized and sent to clients as JSON snapshots over WebSocket.
+- **Input Processing** — How player inputs are processed and snakes are rendered each tick.
+- **WebSocket** — The client–server connection and snapshot stream in detail.
+- **Admin Commands** — Listing, spectating, stopping arenas, and modifying specs at runtime.
+- **Tables & Relationships** — The full database schema, including the `arenas` table.
